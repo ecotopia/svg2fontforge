@@ -19,7 +19,7 @@ vm.createScript("(function () {" + fs.readFileSync(filename).toString('utf-8').r
 
 var Raphael = doc.defaultView.Raphael;
 
-var CHARS = 'ABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ ÀÈÌÒÙ ÁĆÉÍĹŃÓŔŚÚÝŹ ÂĈÊĜĤÎĴÔŜÛŴŶ ǍČĎĚŇŘŠŤŽ ÃÑÕŨ ÅŮ ÄËÏŸ ĄĘŲ ÆŒ Ţ ĢĶĻȘȚ ĐŁØ ŐŰ ĂĞ ŻÞĽ @°-¿?*±+-()&"\'¡!/:,. 0123456789';
+var CHARS = process.argv[3] || 'ABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ ÀÈÌÒÙ ÁĆÉÍĹŃÓŔŚÚÝŹ ÂĈÊĜĤÎĴÔŜÛŴŶ ǍČĎĚŇŘŠŤŽ ÃÑÕŨ ÅŮ ÄËÏŸ ĄĘŲ ÆŒ Ţ ĢĶĻȘȚ ĐŁØ ŐŰ ĂĞ ŻÞĽ @°-¿?*±+-()&"\'¡!/:,. 0123456789'.replace(/\s/g, "");
 
 var $ = cheerio.load(fs.readFileSync(process.argv[2]), {xmlMode: true});
 var svg = cheerio.load($.html());
@@ -39,9 +39,12 @@ paths.sort(function(a, b) {
 });
 
 paths.forEach(function(it, i) {
+	if(i >= CHARS.length)
+		return;
+	
 	var t = cheerio.load(svg.html());
 	t("svg").append($('<g transform="translate(' + (-it.bbox.x) + ',0)"/>').append(it.el))
 		.attr("width", it.bbox.width);
 
-	fs.writeFileSync("out/"+CHARS.charAt(i)+".svg", t.html());
+	fs.writeFileSync("out/"+CHARS.charCodeAt(i)+".svg", t.html());
 });
