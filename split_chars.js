@@ -45,6 +45,22 @@ paths.forEach(function(it, i) {
 	var t = cheerio.load(svg.html());
 	t("svg").append($('<g transform="translate(' + (-it.bbox.x) + ',0)"/>').append(it.el))
 		.attr("width", it.bbox.width);
+		
+	var char = CHARS.charAt(i);
+	var files = [ char == "/" ? "%2f" : char ];
+	
+	// There U+00D0 and U+0110 look the same
+	if(char == "Đ") files.push("Ð");
+	else if(char == "Ð") files.push("Đ");
 
-	fs.writeFileSync("out/"+CHARS.charCodeAt(i)+".svg", t.html());
+	// Make lowercase copy
+	files.forEach(function(it) {
+		if(it.toLowerCase() != it && it.toLowerCase().length == 1)
+			files.push(it.toLowerCase());
+	});
+	
+	var str = t.html();
+	files.forEach(function(it) {
+		fs.writeFileSync("out/"+it+".svg", str);
+	});
 });
