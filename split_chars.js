@@ -19,7 +19,7 @@ vm.createScript("(function () {" + fs.readFileSync(filename).toString('utf-8').r
 
 var Raphael = doc.defaultView.Raphael;
 
-var CHARS = process.argv[3] || 'ABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ ÀÈÌÒÙ ÁĆÉÍĹŃÓŔŚÚÝŹ ÂĈÊĜĤÎĴÔŜÛŴŶ ǍČĎĚŇŘŠŤŽ ÃÑÕŨ ÅŮ ÄËÏŸ ĄĘŲ ÆŒ Ţ ĢĶĻȘȚ ĐŁØ ŐŰ ĂĞ ŻÞĽ @°-¿?*±+-()&"\'¡!/:,. 0123456789'.replace(/\s/g, "");
+var CHARS = process.argv[3] || 'ABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ ÀÈÌÒÙ ÁĆÉÍĹŃÓŔŚÚÝŹ ÂĈÊĜĤÎĴÔŜÛŴŶ ǍČĎĚŇŘŠŤŽ ÃÑÕŨ ÅŮ ÄËÏŸ ĄĘŲ ÆŒ Ţ ĢĶĻȘȚ ĐŁØ ŐŰ ĂĞ ŻÞĽ @°-¿?*±+–()&"\'¡!/:,. 0123456789'.replace(/\s/g, "");
 
 var $ = cheerio.load(fs.readFileSync(process.argv[2]), {xmlMode: true});
 var svg = cheerio.load($.html());
